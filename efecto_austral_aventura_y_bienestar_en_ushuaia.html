@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Efecto Austral: una experiencia premium de aventura y bienestar en Ushuaia. Siete días para vivir la nieve, el hielo y el Fin del Mundo.">
+  <title>Efecto Austral | Aventura y bienestar en Ushuaia</title>
+  <!-- Tailwind CSS for utility styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --navy: #102b3a;
+      --deep: #071923;
+      --ice: #eaf3f5;
+      --mist: #c9dce0;
+      --teal: #8cb9b8;
+      --gold: #d8b982;
+      --white: #fff;
+      --ink: #18313c;
+      --muted: #61747b;
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(7,25,35,.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: Inter, "Segoe UI", Arial, sans-serif; color: var(--ink); background: #f7fafb; line-height: 1.6; overflow-x: hidden; }
+    a { color: inherit; }
+    
+    .topbar { position: absolute; top: 0; left: 0; right: 0; z-index: 100; display:flex; justify-content:space-between; align-items:center; padding: 24px 7%; color: white; border-bottom: 1px solid rgba(255,255,255,.18); background: rgba(7,25,35,0.4); backdrop-filter: blur(10px); }
+    .brand { font-size: 1.05rem; letter-spacing: .2em; font-weight: 800; text-decoration: none; color: white; }
+    .brand span { display:block; font-size:.58rem; letter-spacing:.32em; font-weight:500; opacity:.8; }
+    
+    /* Navegación para PC y Móvil */
+    nav { display:flex; gap:26px; align-items:center; }
+    nav a { text-decoration:none; font-size:.88rem; color:rgba(255,255,255,.9); transition: color 0.3s ease; }
+    nav a:hover { color:var(--gold); }
+    .nav-cta { border:1px solid rgba(255,255,255,.65); padding:10px 16px; border-radius:30px; transition: all 0.3s ease; }
+    .nav-cta:hover { background: rgba(255,255,255,0.15); border-color: var(--gold); }
+    
+    /* Botón de Menú Hamburguesa para Celular */
+    .menu-toggle { display: none; background: none; border: none; color: white; font-size: 1.6rem; cursor: pointer; z-index: 101; }
+
+    /* Hero section */
+    .hero { min-height: 760px; display:flex; align-items:center; position:relative; color:white; padding:150px 7% 100px; background: linear-gradient(90deg, rgba(5,23,33,.88) 0%, rgba(5,23,33,.6) 47%, rgba(5,23,33,.2) 100%), linear-gradient(0deg, rgba(5,23,33,.35), transparent 55%), url('https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=2200&q=85') center/cover; }
+    .hero-content { max-width: 700px; }
+    .eyebrow { text-transform:uppercase; letter-spacing:.23em; font-size:.75rem; font-weight:700; color:var(--gold); }
+    h1 { font-family: Georgia, "Times New Roman", serif; font-weight:400; font-size:clamp(3.1rem, 7vw, 7.3rem); line-height:.92; letter-spacing:-.04em; margin:22px 0 28px; }
+    h1 em { font-weight:400; color:#b9d6d9; font-style: normal; }
+    .hero p { max-width:540px; font-size:1.13rem; color:rgba(255,255,255,.88); margin-bottom:32px; }
+    .actions { display:flex; flex-wrap:wrap; gap:13px; }
+    .btn { display:inline-flex; justify-content:center; align-items:center; gap:9px; padding:14px 22px; border-radius:999px; text-decoration:none; font-weight:700; font-size:.9rem; transition:all .3s cubic-bezier(.2,.7,.2,1); position:relative; overflow:hidden; }
+    .btn-primary { background:var(--gold); color:var(--deep); }
+    .btn-primary:hover { background:#e8cca0; transform:translateY(-3px); box-shadow: 0 10px 25px rgba(216,185,130,0.3); }
+    .btn-outline { border:1px solid rgba(255,255,255,.65); color:white; }
+    .btn-outline:hover { background:rgba(255,255,255,.15); transform:translateY(-3px); }
+    .hero-meta { position:absolute; bottom:28px; left:7%; right:7%; display:flex; gap:30px; flex-wrap:wrap; color:rgba(255,255,255,.86); font-size:.82rem; letter-spacing:.04em; }
+    .hero-meta span::before { content:"✦"; color:var(--gold); margin-right:9px; }
+    
+    .quick-facts { background:white; display:grid; grid-template-columns:repeat(4,1fr); padding:30px 7%; box-shadow:var(--shadow); position:relative; z-index:2; border-radius: 0 0 var(--radius) var(--radius); }
+    .fact { padding:0 24px; border-right:1px solid #dce6e8; }
+    .fact:first-child { padding-left:0; }
+    .fact:last-child { border:0; }
+    .fact strong { display:block; font-family:Georgia,serif; font-size:1.6rem; font-weight:400; color:var(--navy); }
+    .fact span { font-size:.82rem; color:var(--muted); }
+    
+    section { padding:100px 7%; }
+    .section-head { max-width:690px; margin-bottom:44px; }
+    .section-head .eyebrow { color:#668f91; }
+    h2 { font-family:Georgia,serif; font-weight:400; font-size:clamp(2.1rem, 4.5vw, 4rem); line-height:1.08; margin:13px 0 18px; color:var(--navy); letter-spacing:-.025em; }
+    .section-head p { color:var(--muted); font-size:1.04rem; }
+    
+    .intro-grid { display:grid; grid-template-columns:1fr 1fr; gap:65px; align-items:center; }
+    .intro-image { min-height:500px; border-radius:var(--radius); background:url('https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=1200&q=85') center/cover; position:relative; overflow:hidden; box-shadow: var(--shadow); transition: transform 0.6s cubic-bezier(.2,.7,.2,1); }
+    .intro-image:hover { transform: scale(1.02); }
+    .image-note { position:absolute; left:22px; bottom:22px; background:rgba(7,25,35,.82); color:white; padding:16px 19px; border-radius:12px; backdrop-filter:blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+    .image-note small { display:block; color:#c8dfe2; letter-spacing:.13em; text-transform:uppercase; font-size:.65rem; }
+    .image-note strong { font-family:Georgia,serif; font-size:1.35rem; font-weight:400; }
+    .intro-copy p { color:var(--muted); margin-bottom: 16px; }
+    .quote { margin-top:28px; padding:22px 25px; border-left:3px solid var(--gold); background:#edf4f5; font-family:Georgia,serif; font-size:1.22rem; color:var(--navy); border-radius: 0 12px 12px 0; }
+    
+    .activities { background:var(--deep); color:white; }
+    .activities h2 { color:white; }
+    .activities .section-head p { color:#b7c9ce; }
+    .activity-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .activity { min-height:290px; position:relative; overflow:hidden; border-radius:16px; padding:28px; display:flex; flex-direction:column; justify-content:flex-end; background-size:cover; background-position:center; isolation:isolate; transition:all .5s cubic-bezier(.2,.7,.2,1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    .activity::before { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(0deg,rgba(4,17,25,.94),rgba(4,17,25,.1) 85%); transition:all .4s ease; }
+    .activity:hover { transform:translateY(-8px) scale(1.02); box-shadow:0 22px 45px rgba(0,0,0,.45); }
+    .activity:hover::before { background:linear-gradient(0deg,rgba(4,17,25,.96),rgba(4,17,25,.35)); }
+    .activity .num { color:var(--gold); letter-spacing:.16em; font-size:.7rem; margin-bottom:8px; font-weight: 700; }
+    .activity h3 { font-family:Georgia,serif; font-size:1.65rem; font-weight:400; line-height:1.1; margin:0 0 8px; }
+    .activity p { color:#d5e1e4; font-size:.88rem; margin:0; }
+    .a-ski { background-image:url("descarga\ \(2\).jpg"); }
+    .a-lighthouse { background-image:url('faro.jpg'); }
+    .a-yoga { background-image:url('yoga.jpg'); }
+    .a-skate { background-image:url('patinaje.jpg'); }
+    .a-husky { background-image:url('Husky.jpg'); }
+    .a-ice { background-image:url('https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=900&q=80'); }
+    
+    .itinerary { background:#eef4f5; }
+    .timeline { max-width:930px; margin:auto; position:relative; }
+    .timeline::before { content:""; position:absolute; left:110px; top:15px; bottom:20px; width:2px; background:#b8cdd1; }
+    .day { display:grid; grid-template-columns:85px 1fr; gap:52px; position:relative; padding-bottom:34px; }
+    .day:last-child { padding-bottom:0; }
+    .day-label { text-align:right; color:#688b90; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; padding-top:5px; }
+    .day-label strong { display:block; font-family:Georgia,serif; font-size:2.15rem; color:var(--navy); font-weight:400; line-height:1.1; letter-spacing:0; }
+    .day-content { background:white; padding:25px 30px; border-radius:14px; box-shadow:0 6px 22px rgba(16,43,58,.05); position:relative; transition:all .35s cubic-bezier(.2,.7,.2,1); }
+    .day-content:hover { transform:translateX(8px); box-shadow:0 12px 32px rgba(16,43,58,.12); }
+    .day-content::before { content:""; position:absolute; width:13px; height:13px; background:var(--gold); border:4px solid #eef4f5; border-radius:50%; left:-50px; top:28px; }
+    .day-content h3 { margin:0 0 7px; font-family:Georgia,serif; font-size:1.4rem; font-weight:400; color:var(--navy); }
+    .day-content p { margin:0; color:var(--muted); font-size:.94rem; }
+    .day-tag { display:inline-block; margin-top:13px; padding:5px 12px; border-radius:30px; background:#eaf2f3; color:#4e7479; font-size:.72rem; font-weight:700; }
+    
+    .stay-grid { display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center; }
+    .stay-image { height:450px; border-radius:var(--radius); background:url('https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=1200&q=85') center/cover; box-shadow: var(--shadow); transition: transform 0.6s cubic-bezier(.2,.7,.2,1); }
+    .stay-image:hover { transform: scale(1.02); }
+    .stay-copy ul { padding:0; list-style:none; margin:25px 0; }
+    .stay-copy li { padding:12px 0; border-bottom:1px solid #dce6e8; color:var(--muted); display: flex; align-items: center; }
+    .stay-copy li::before { content:"✓"; color:#729a9a; font-weight:800; margin-right:12px; background: #eaf3f5; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.75rem; }
+    .note { font-size:.82rem; color:var(--muted); background:#edf4f5; border-radius:12px; padding:16px 18px; border:1px solid #d5e2e5; }
+    
+    .climate { background:white; }
+    .climate-layout { display:grid; grid-template-columns:.8fr 1.2fr; gap:50px; align-items:start; }
+    .temperature-card { background:var(--navy); color:white; padding:34px; border-radius:var(--radius); box-shadow: var(--shadow); }
+    .temperature-card .big-temp { font-family:Georgia,serif; font-size:4.6rem; line-height:1; margin:10px 0; color: var(--gold); }
+    .temperature-card p { color:#c5d8dd; }
+    .temperature-card .small { border-top:1px solid rgba(255,255,255,.2); margin-top:25px; padding-top:18px; font-size:.86rem; }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; font-size:.9rem; }
+    th { text-align:left; color:#64858b; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; padding:13px 10px; border-bottom:1px solid #cbdadd; }
+    td { padding:12px 10px; border-bottom:1px solid #e4ecee; color: var(--ink); }
+    tr.highlight { background:#edf4f5; font-weight:700; color:var(--navy); }
+
+    /* Galería Visual */
+    .gallery-section { background: #f0f5f7; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .gallery-item { height: 260px; border-radius: var(--radius); overflow: hidden; position: relative; box-shadow: var(--shadow); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(.2,.7,.2,1); }
+    .gallery-item:hover img { transform: scale(1.06); }
+    
+    .contact-section { background:#eaf3f5; }
+    .contact-grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:45px; align-items:start; }
+    .contact-copy { padding:12px 0; }
+    .contact-copy p { color:var(--muted); }
+    .contact-details { margin-top:26px; display:grid; gap:14px; }
+    .contact-detail { display:flex; gap:13px; align-items:flex-start; color:var(--navy); }
+    .contact-icon { display:grid; place-items:center; width:40px; height:40px; flex:0 0 40px; border-radius:50%; background:white; color:#648f91; font-size:1.1rem; box-shadow: 0 4px 12px rgba(16,43,58,0.08); }
+    .contact-detail small { display:block; color:var(--muted); font-size:.76rem; }
+    
+    .contact-form { background:white; border-radius:20px; padding:clamp(22px,4vw,38px); box-shadow:var(--shadow); position: relative; }
+    .contact-form h3 { font-family:Georgia,serif; font-size:1.8rem; font-weight:400; color:var(--navy); margin:0 0 8px; }
+    .contact-form > p { color:var(--muted); font-size:.9rem; margin:0 0 24px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .field { display:flex; flex-direction:column; gap:7px; margin-bottom:16px; }
+    .field label { font-size:.82rem; color:var(--navy); font-weight:700; }
+    .field input, .field textarea, .field select {
+      width:100%; border:1px solid #d5e2e5; background:#fbfdfd; color:var(--ink);
+      border-radius:10px; padding:13px 14px; font:inherit; font-size:.92rem; outline:none;
+      transition:border-color .25s ease, box-shadow .25s ease;
+    }
+    .field input:focus, .field textarea:focus, .field select:focus { border-color:#7fa7aa; box-shadow:0 0 0 3px rgba(127,167,170,.16); }
+    .field textarea { min-height:135px; resize:vertical; }
+    .contact-form .btn { border:0; cursor:pointer; width:100%; background: var(--navy); color: white; justify-content: center; }
+    .contact-form .btn:hover { background: #183d50; }
+    .form-note { margin-top:13px!important; font-size:.76rem!important; color:#72848a!important; }
+    
+    footer { background:#06151d; color:#b4c5ca; padding:35px 7%; display:flex; justify-content:space-between; gap:25px; align-items:center; flex-wrap:wrap; font-size:.8rem; }
+    footer .brand { color:white; }
+    footer a { color:#d9c49d; text-decoration:none; transition: color 0.3s; }
+    footer a:hover { color: white; }
+    .foot-links { display:flex; gap:18px; flex-wrap:wrap; }
+    
+    /* Botón flotante de WhatsApp */
+    .whatsapp-float {
+      position: fixed; left: 22px; bottom: 22px; z-index: 100; background: #25d366; color: white;
+      width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; box-shadow: 0 8px 24px rgba(37,211,102,.35); transition: all .3s cubic-bezier(.2,.7,.2,1);
+      text-decoration: none;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); background: #22bf5b; }
+
+    .intro-screen {
+      position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center;
+      background: #071923; color: white; transition: opacity .9s cubic-bezier(.2,.8,.2,1), visibility .9s cubic-bezier(.2,.8,.2,1);
+    }
+    .intro-screen.done { opacity: 0; visibility: hidden; pointer-events: none; }
+    .intro-logo { text-align:center; animation: logoReveal 1.2s cubic-bezier(.2,.8,.2,1) both; }
+    .intro-logo strong { display:block; font-size:clamp(2rem,7vw,4.5rem); letter-spacing:.22em; font-weight:500; }
+    .intro-logo span { display:block; color:#d8b982; letter-spacing:.35em; font-size:.68rem; margin-top:12px; }
+    .intro-line { height:1px; width:0; margin:24px auto 0; background:#d8b982; animation: lineGrow 1s .35s cubic-bezier(.2,.8,.2,1) forwards; }
+    @keyframes logoReveal { from { opacity:0; transform:translateY(30px); letter-spacing:.4em; } to { opacity:1; transform:translateY(0); letter-spacing:.22em; } }
+    @keyframes lineGrow { to { width:min(260px,65vw); } }
+    
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      filter: blur(4px);
+      transition: opacity 1.2s cubic-bezier(.16, 1, .3, 1), transform 1.2s cubic-bezier(.16, 1, .3, 1), filter 1.2s cubic-bezier(.16, 1, .3, 1);
+      will-change: opacity, transform, filter;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+    .reveal.from-left { transform: translateX(-50px) translateY(20px); }
+    .reveal.from-right { transform: translateX(50px) translateY(20px); }
+    .reveal.from-left.visible, .reveal.from-right.visible { transform: translateX(0) translateY(0); }
+    .snow-layer { position:absolute; inset:0; z-index:1; overflow:hidden; pointer-events:none; }
+    .snowflake { position:absolute; top:-14px; color:rgba(255,255,255,.8); text-shadow:0 0 8px rgba(255,255,255,.5); animation: snowFall linear infinite; }
+    @keyframes snowFall { to { transform:translate3d(var(--drift),110vh,0) rotate(360deg); opacity:.15; } }
+    
+    .scroll-progress { position:fixed; top:0; left:0; width:0; height:3px; background:var(--gold); z-index:10000; box-shadow:0 0 12px rgba(216,185,130,.6); transition: width 0.1s linear; }
+    
+    .back-top {
+      position:fixed; right:22px; bottom:22px; z-index:100; width:46px; height:46px; border:1px solid rgba(255,255,255,.25);
+      border-radius:50%; background:var(--navy); color:white; font-size:1.2rem; cursor:pointer;
+      opacity:0; visibility:hidden; transform:translateY(15px); transition:all .4s cubic-bezier(.2,.7,.2,1); box-shadow:0 8px 24px rgba(0,0,0,.25);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .back-top.show { opacity:1; visibility:visible; transform:translateY(0); }
+    .back-top:hover { background:#1b4456; transform:translateY(-4px); }
+
+    /* MEDIA QUERIES PARA ADAPTAR A CELULARES Y TABLETS */
+    @media(max-width:850px) {
+      .menu-toggle { display: block; }
+      nav {
+        position: fixed; top: 0; right: -100%; width: 75%; height: 100vh; background: var(--deep);
+        flex-direction: column; justify-content: center; align-items: center; gap: 24px;
+        transition: right 0.4s cubic-bezier(.2,.7,.2,1); box-shadow: -10px 0 30px rgba(0,0,0,0.5); z-index: 99;
+      }
+      nav.active { right: 0; }
+      nav a { font-size: 1.1rem; }
+      
+      .hero { min-height:700px; }
+      .quick-facts { grid-template-columns:repeat(2,1fr); gap:22px; border-radius: 0; }
+      .fact:nth-child(2) { border:0; } .fact:nth-child(3) { padding-left:0; }
+      .intro-grid,.stay-grid,.climate-layout { grid-template-columns:1fr; gap:32px; }
+      .intro-image { min-height:390px; }
+      .activity-grid { grid-template-columns:repeat(2,1fr); }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      section { padding:75px 6%; }
+      .contact-grid { grid-template-columns:1fr; gap:28px; }
+    }
+    @media(max-width:560px) {
+      .topbar { padding:18px 6%; } .brand { font-size:.9rem; }
+      .hero { padding:130px 6% 100px; min-height:690px; }
+      h1 { font-size:2.8rem; }
+      .hero p { font-size:1rem; }
+      .hero-meta { left:6%; right:6%; gap:12px 18px; bottom:18px; }
+      .quick-facts { padding:25px 6%; }
+      .fact { padding:0 10px; } .fact strong { font-size:1.35rem; }
+      .activity-grid { grid-template-columns:1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .activity { min-height:245px; }
+      .timeline::before { left:24px; }
+      .day { grid-template-columns:1fr; gap:10px; padding-left:52px; }
+      .day-label { text-align:left; }
+      .day-label strong { display:inline; font-size:1.8rem; margin-right:7px; }
+      .day-content::before { left:-39px; }
+      .day-content { padding:20px; }
+      .temperature-card { padding:26px; }
+      .foot-links { gap:12px; }
+      .form-row { grid-template-columns:1fr; gap:0; }
+    }
+  </style>
+</head>
+<body class="loading">
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="intro-screen" id="introScreen" aria-label="Presentación Efecto Austral">
+    <div class="intro-logo">
+      <strong>EFECTO AUSTRAL</strong>
+      <span>AVENTURA · NATURALEZA · BIENESTAR</span>
+      <div class="intro-line"></div>
+    </div>
+  </div>
+  <header class="topbar">
+    <a class="brand" href="#inicio">EFECTO AUSTRAL<span>VIAJES QUE TRANSFORMAN</span></a>
+    
+    <!-- Botón de menú hamburguesa para dispositivos móviles -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+
+    <nav id="navMenu" aria-label="Navegación principal">
+      <a href="#experiencia" class="nav-link">La experiencia</a>
+      <a href="#itinerario" class="nav-link">Itinerario</a>
+      <a href="#alojamiento" class="nav-link">Alojamiento</a>
+      <a href="#contacto" class="nav-link">Contactanos</a>
+      <a class="nav-cta nav-link" href="#contacto">Quiero vivirlo ↗</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="inicio">
+      <div class="snow-layer" id="snowLayer" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="eyebrow">Ushuaia · Patagonia Argentina · Julio / Agosto</div>
+        <h1>Sentí el frío.<br><em>Despertá</em><br>tus sentidos.</h1>
+        <p>Siete días en el Fin del Mundo donde la aventura se encuentra con el bienestar. Nieve, paisajes extremos y momentos para conectar con vos mismo.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#itinerario">Explorar el viaje <span>↘</span></a>
+          <a class="btn btn-outline" href="#experiencia">Descubrir Efecto Austral</a>
+        </div>
+      </div>
+      <div class="hero-meta"><span>7 días / 6 noches</span><span>Grupo reducido · 10 viajeros</span><span>Experiencia +18</span></div>
+    </section>
+    <div class="quick-facts reveal" aria-label="Datos principales del paquete">
+      <div class="fact"><strong>7 días</strong><span>Una escapada extraordinaria</span></div>
+      <div class="fact"><strong>10 viajeros</strong><span>Grupo íntimo y exclusivo</span></div>
+      <div class="fact"><strong>Aventura + calma</strong><span>Adrenalina y bienestar</span></div>
+      <div class="fact"><strong>Ushuaia</strong><span>El Fin del Mundo</span></div>
+    </div>
+    <section id="experiencia">
+      <div class="intro-grid">
+        <div class="intro-image reveal from-left">
+          <div class="image-note"><small>Tu próxima historia</small><strong>Más allá de lo conocido.</strong></div>
+        </div>
+        <div class="intro-copy reveal from-right">
+          <div class="eyebrow">Una experiencia diferente</div>
+          <h2>No es solo un viaje.<br>Es un antes y un después.</h2>
+          <p>EFECTO AUSTRAL combina la energía de los deportes de nieve con la serenidad de prácticas de bienestar en un escenario natural único. Una propuesta pensada para quienes buscan salir de la rutina, desafiar sus límites y vivir la Patagonia de una manera distinta.</p>
+          <p>Desde las pistas nevadas hasta una pausa de yoga en plena naturaleza, cada jornada invita a experimentar el destino con todos los sentidos.</p>
+          <div class="quote">“Hay lugares que se visitan. Y hay lugares que te cambian la forma de sentir.”</div>
+        </div>
+      </div>
+    </section>
+    <section class="activities">
+      <div class="section-head reveal">
+        <div class="eyebrow">Aventura con propósito</div>
+        <h2>Seis formas de sentir<br>el Fin del Mundo.</h2>
+        <p>Una selección de actividades que combina emoción, conexión con la naturaleza y momentos para bajar el ritmo. Las actividades están sujetas a condiciones climáticas y operativas.</p>
+      </div>
+      <div class="activity-grid">
+        <article class="activity a-ski reveal"><div class="num">01 — 02 DÍAS</div><h3>Ski & Snowboard</h3><p>Dos jornadas para deslizarte entre montañas y nieve fueguina.</p></article>
+        <article class="activity a-lighthouse reveal"><div class="num">03 — EXPLORAR</div><h3>Excursión al faro</h3><p>Navegación por el Canal Beagle hacia uno de los paisajes emblemáticos de Ushuaia.</p></article>
+        <article class="activity a-yoga reveal"><div class="num">04 — CONECTAR</div><h3>Yoga en la nieve</h3><p>Una práctica consciente para respirar, estirar y conectar con el entorno.</p></article>
+        <article class="activity a-skate reveal"><div class="num">05 — JUGAR</div><h3>Patinaje sobre hielo</h3><p>Una tarde activa para disfrutar el invierno desde otra perspectiva.</p></article>
+        <article class="activity a-husky reveal"><div class="num">06 — AVENTURA</div><h3>Paseo en trineo husky</h3><p>Una experiencia invernal entre bosques y paisajes nevados.</p></article>
+        <article class="activity a-ice reveal"><div class="num">07 — DESAFIARTE</div><h3>Inmersión en agua fría</h3><p>Un cierre desafiante, guiado por profesionales y con evaluación previa de seguridad.</p></article>
+      </div>
+    </section>
+    <section class="itinerary" id="itinerario">
+      <div class="section-head reveal">
+        <div class="eyebrow">Tu viaje, día por día</div>
+        <h2>Siete días que vas<br>a recordar siempre.</h2>
+        <p>Un ritmo pensado para alternar actividad, exploración y recuperación. El orden y los horarios pueden ajustarse según el clima, la disponibilidad de los prestadores y la operación de los vuelos.</p>
+      </div>
+      <div class="timeline">
+        <article class="day reveal"><div class="day-label"><strong>01</strong> Llegada</div><div class="day-content"><h3>Bienvenidos al Fin del Mundo</h3><p>Vuelo desde Córdoba a Ushuaia, con conexión prevista en Buenos Aires. Traslado al alojamiento, check-in y tiempo para instalarse y descansar. Sin excursiones programadas.</p><span class="day-tag">Traslados · Descanso</span></div></article>
+        <article class="day reveal"><div class="day-label"><strong>02</strong> Nieve</div><div class="day-content"><h3>Primer día de ski o snowboard</h3><p>Primera jornada en la nieve para disfrutar las pistas y el paisaje de montaña. Equipamiento y ropa técnica a confirmar con el prestador.</p><span class="day-tag">Aventura · Montaña</span></div></article>
+        <article class="day reveal"><div class="day-label"><strong>03</strong> Nieve</div><div class="day-content"><h3>Un nuevo desafío en las pistas</h3><p>Segundo día de ski o snowboard para seguir practicando, ganar confianza y disfrutar el invierno fueguino a tu propio ritmo.</p><span class="day-tag">Ski / snowboard</span></div></article>
+        <article class="day reveal"><div class="day-label"><strong>04</strong> Explorar</div><div class="day-content"><h3>El mítico Faro Les Éclaireurs</h3><p>Excursión en catamarán por el Canal Beagle para contemplar el faro y los paisajes costeros. Tarde libre para recorrer Ushuaia o descansar.</p><span class="day-tag">Navegación · Tiempo libre</span></div></article>
+        <article class="day reveal"><div class="day-label"><strong>05</strong> Bienestar</div><div class="day-content"><h3>Respirar la nieve, sentir el hielo</h3><p>Mañana de yoga en un entorno natural nevado. Por la tarde, sesión de patinaje sobre hielo para sumar movimiento y diversión.</p><span class="day-tag">Yoga · Patinaje</span></div></article>
+        <article class="day reveal"><div class="day-label"><strong>06</strong> Aventura</div><div class="day-content"><h3>Entre bosques y huskies</h3><p>Mañana de actividades en la nieve y, por la tarde, paseo en trineo tirado por perros husky con operadores habilitados.</p><span class="day-tag">Nieve · Trineo husky</span></div></article>
+        <article class="day reveal"><div class="day-label"><strong>07</strong> Despedida</div><div class="day-content"><h3>Un último desafío antes de volver</h3><p>Experiencia de inmersión en agua fría, únicamente con supervisión profesional, evaluación previa y condiciones seguras. Traslado al aeropuerto y vuelo de regreso a Córdoba, con llegada estimada por la noche según conexiones.</p><span class="day-tag">Bienestar · Regreso</span></div></article>
+      </div>
+    </section>
+    <section id="alojamiento">
+      <div class="stay-grid">
+        <div class="stay-image reveal from-left" role="img" aria-label="Paisaje de alojamiento rodeado de naturaleza"></div>
+        <div class="stay-copy reveal from-right">
+          <div class="eyebrow">Descanso con identidad patagónica</div>
+          <h2>Tu refugio después de la aventura.</h2>
+          <p>El alojamiento previsto es en Ushuaia, en base doble, con desayuno. La propuesta busca combinar comodidad, descanso y una buena ubicación para conectar las distintas experiencias del programa.</p>
+          <ul>
+            <li>6 noches de alojamiento previstas en el paquete</li>
+            <li>Habitación en base doble</li>
+            <li>Desayuno incluido; menú y régimen final a confirmar</li>
+            <li>Traslados terrestres a las actividades programadas</li>
+          </ul>
+          <p class="note"><strong>Importante:</strong> el hotel o complejo, la categoría, la disponibilidad y el régimen de comidas se confirmarán en la cotización final. Las tarifas de referencia recibidas para cabañas de Cerro Castor deben validarse para las fechas y ocupación exactas.</p>
+        </div>
+      </div>
+    </section>
+    <section class="climate">
+      <div class="climate-layout">
+        <div class="temperature-card reveal from-left">
+          <div class="eyebrow">Invierno fueguino</div>
+          <div class="big-temp">0,5–1,5°</div>
+          <p>Temperaturas medias orientativas para julio y agosto, respectivamente, según los datos de referencia del programa.</p>
+          <div class="small">Capas térmicas · Abrigo impermeable · Guantes · Calzado adecuado</div>
+        </div>
+        <div class="table-wrap reveal from-right">
+          <table aria-label="Temperaturas medias mensuales de referencia">
+            <thead><tr><th>Mes</th><th>Media °C</th><th>Humedad</th></tr></thead>
+            <tbody>
+              <tr><td>Enero</td><td>9,5°</td><td>74%</td></tr>
+              <tr><td>Febrero</td><td>9,5°</td><td>76%</td></tr>
+              <tr><td>Marzo</td><td>7,5°</td><td>79%</td></tr>
+              <tr><td>Abril</td><td>5°</td><td>81%</td></tr>
+              <tr><td>Mayo</td><td>2,5°</td><td>85%</td></tr>
+              <tr class="highlight"><td>Junio</td><td>1°</td><td>91%</td></tr>
+              <tr class="highlight"><td>Julio</td><td>0,5°</td><td>89%</td></tr>
+              <tr class="highlight"><td>Agosto</td><td>1,5°</td><td>86%</td></tr>
+              <tr><td>Septiembre</td><td>3°</td><td>79%</td></tr>
+              <tr><td>Octubre</td><td>5,5°</td><td>66%</td></tr>
+              <tr><td>Noviembre</td><td>7,5°</td><td>72%</td></tr>
+              <tr><td>Diciembre</td><td>8,5°</td><td>74%</td></tr>
+            </tbody>
+          </table>
+          <p class="note" style="margin-top:18px">Valores orientativos aportados para la planificación; no constituyen un pronóstico para fechas específicas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Galería Visual -->
+    <section class="gallery-section">
+      <div class="section-head reveal">
+        <div class="eyebrow">Paisajes inigualables</div>
+        <h2>Instantes del Fin del Mundo.</h2>
+        <p>Un recorrido visual por los escenarios naturales que vas a explorar durante tu estadía en Ushuaia.</p>
+      </div>
+      <div class="gallery-grid reveal">
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=800&q=80" alt="Montañas nevadas Ushuaia"></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=800&q=80" alt="Paisaje patagónico"></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=800&q=80" alt="Refugio patagónico"></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=800&q=80" alt="Nieve y aventura"></div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contacto">
+      <div class="contact-grid">
+        <div class="contact-copy reveal from-left">
+          <div class="eyebrow">Estamos para ayudarte</div>
+          <h2>Hablemos de<br>tu próxima aventura.</h2>
+          <p>¿Querés conocer más sobre EFECTO AUSTRAL, consultar fechas o recibir una propuesta para tu grupo? Escribinos directamente desde la web y nos pondremos en contacto con vos a la brevedad.</p>
+          <div class="contact-details">
+            <div class="contact-detail"><div class="contact-icon">✉</div><div><strong>Contacto por email</strong><small>viaja.sempiterno@gmail.com</small></div></div>
+            <div class="contact-detail"><div class="contact-icon">❄</div><div><strong>EFECTO AUSTRAL</strong><small>Aventura · Naturaleza · Bienestar</small></div></div>
+            <div class="contact-detail"><div class="contact-icon">⌖</div><div><strong>Ushuaia, Tierra del Fuego</strong><small>Patagonia Argentina</small></div></div>
+          </div>
+        </div>
+        
+        <form class="contact-form reveal from-right" id="contactForm" action="https://formspree.io/f/mnpjvbrn" method="POST">
+          <h3>Contactanos</h3>
+          <p>Dejanos tus datos y prepará el próximo paso.</p>
+          
+          <div class="form-row">
+            <div class="field">
+              <label for="contactName">Nombre y apellido *</label>
+              <input id="contactName" name="nombre" type="text" placeholder="Tu nombre" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="contactEmail">Tu email *</label>
+              <input id="contactEmail" name="email" type="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="contactPhone">Teléfono / WhatsApp</label>
+              <input id="contactPhone" name="telefono" type="tel" placeholder="+54 9 ..." autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="contactSubject">Interés principal</label>
+              <select id="contactSubject" name="asunto">
+                <option value="Consulta General">Consulta general sobre el viaje</option>
+                <option value="Reserva Grupo">Reserva para grupo</option>
+                <option value="Fechas y Tarifas">Fechas y tarifas disponibles</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="contactMessage">Mensaje o comentarios *</label>
+            <textarea id="contactMessage" name="mensaje" placeholder="Contanos tus dudas o consultas..." required></textarea>
+          </div>
+          <button type="submit" class="btn" id="submitBtn">
+            <span id="btnText">Enviar mensaje</span>
+          </button>
+          <p class="form-note">Tus datos se envían de forma segura directamente desde nuestra web. No abriremos tu cliente de correo.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Botón flotante de WhatsApp -->
+  <a href="https://wa.me/54935547509341?text=Hola,%20quiero%20consultar%20sobre%20Efecto%20Austral" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+    💬
+  </a>
+
+  <footer>
+    <div class="brand">EFECTO AUSTRAL<span>AVENTURA Y BIENESTAR EN USHUAIA</span></div>
+    <div class="foot-links">
+      <a href="#experiencia">La experiencia</a>
+      <a href="#itinerario">Itinerario</a>
+      <a href="#alojamiento">Alojamiento</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div>© 2026 Efecto Austral. Todos los derechos reservados.</div>
+  </footer>
+  <button class="back-top" id="backTopBtn" aria-label="Volver arriba">↑</button>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Quitar estado de carga inicial y pantalla de presentación suave
+      setTimeout(() => {
+        const introScreen = document.getElementById('introScreen');
+        if (introScreen) {
+          introScreen.classList.add('done');
+          document.body.classList.remove('loading');
+        }
+      }, 1000);
+
+      // 2. Menú desplegable para celulares (Hamburguesa)
+      const menuToggle = document.getElementById('menuToggle');
+      const navMenu = document.getElementById('navMenu');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => {
+          navMenu.classList.toggle('active');
+          menuToggle.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Cerrar el menú automáticamente al hacer clic en una opción
+        navLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            menuToggle.textContent = '☰';
+          });
+        });
+      }
+
+      // 3. Generador de nevada
+      const snowLayer = document.getElementById('snowLayer');
+      if (snowLayer) {
+        const snowflakeCount = 28;
+        for (let i = 0; i < snowflakeCount; i++) {
+          const sf = document.createElement('div');
+          sf.className = 'snowflake';
+          sf.innerHTML = '❄';
+          const size = Math.random() * 10 + 8;
+          sf.style.fontSize = size + 'px';
+          sf.style.left = Math.random() * 100 + '%';
+          sf.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
+          sf.style.animationDuration = (Math.random() * 6 + 6) + 's';
+          sf.style.animationDelay = (Math.random() * 5) + 's';
+          snowLayer.appendChild(sf);
+        }
+      }
+
+      // 4. Barra de progreso de scroll y botón "Volver arriba"
+      const progressBar = document.getElementById('scrollProgress');
+      const backTopBtn = document.getElementById('backTopBtn');
+      window.addEventListener('scroll', () => {
+        const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const currentScroll = window.scrollY;
+        if (progressBar && totalHeight > 0) {
+          progressBar.style.width = (currentScroll / totalHeight) * 100 + '%';
+        }
+        if (backTopBtn) {
+          if (currentScroll > 500) {
+            backTopBtn.classList.add('show');
+          } else {
+            backTopBtn.classList.remove('show');
+          }
+        }
+      });
+      if (backTopBtn) {
+        backTopBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // 5. Animaciones de entrada al hacer scroll
+      const revealElements = document.querySelectorAll('.reveal');
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -50px 0px'
+      });
+      revealElements.forEach(el => revealObserver.observe(el));
+    });
+  </script>
+</body>
+</html>
